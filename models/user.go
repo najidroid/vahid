@@ -24,5 +24,5 @@ func init() {
 }
 
 func SetUsers() {
-	fmt.Print("adsg")
+	fmt.Print("hellllooooooo*******************")
 }
