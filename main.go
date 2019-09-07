@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "app_ef9c76b3-66e6-4a0f-8eb7-b645d18a05e1/newsService/routers"
+	//	_ "newsService/routers"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -9,7 +9,7 @@ import (
 
 	"fmt"
 
-	"github.com/astaxie/beego/orm"
+	//	"github.com/astaxie/beego/orm"
 
 	"log"
 
@@ -27,36 +27,36 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-type User struct {
-	Id    int
-	Title string
-	Link  string
-	Desc  string
-}
+//type User struct {
+//	Id    int
+//	Title string
+//	Link  string
+//	Desc  string
+//}
 
 func init() {
-	orm.RegisterDriver("mysql", orm.DRMySQL)
+	//	orm.RegisterDriver("mysql", orm.DRMySQL)
 
-	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
+	//	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
 }
 
 func main() {
-	// Database alias.
-	name := "default"
+	//	// Database alias.
+	//	name := "default"
 
-	// Drop table and re-create.
-	force := true
+	//	// Drop table and re-create.
+	//	force := true
 
-	// Print log.
-	verbose := true
+	//	// Print log.
+	//	verbose := true
 
-	// Error.
-	err := orm.RunSyncdb(name, force, verbose)
+	//	// Error.
+	//	err := orm.RunSyncdb(name, force, verbose)
 
-	if err != nil {
-		fmt.Println(err)
+	//	if err != nil {
+	//		fmt.Println(err)
 
-	}
+	//	}
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
