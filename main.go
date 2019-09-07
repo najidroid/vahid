@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "/home/bas/newsService/routers"
+	_ "routers"
 
 	_ "github.com/go-sql-driver/mysql"
 
