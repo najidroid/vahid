@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "newsService/routers"
+	//	_ "newsService/routers"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -27,11 +27,11 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-type User struct {
-	Id   int
-	Name string
-	//	Profile *Profile `orm:"rel(one)"` // OneToOne relation
-}
+//type User struct {
+//	Id   int
+//	Name string
+//	Profile *Profile `orm:"rel(one)"` // OneToOne relation
+//}
 
 func init() {
 	//	orm.RegisterDriver("mysql", orm.DRMySQL)
