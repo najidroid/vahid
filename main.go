@@ -9,7 +9,7 @@ import (
 
 	"fmt"
 
-	"github.com/astaxie/beego/orm"
+	//	"github.com/astaxie/beego/orm"
 
 	"log"
 
@@ -27,34 +27,42 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-func init() {
-	orm.RegisterDriver("mysql", orm.DRMySQL)
+type User struct {
+	Id   int
+	Name string
+	//	Profile *Profile `orm:"rel(one)"` // OneToOne relation
+}
 
-	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
+func init() {
+	//	orm.RegisterDriver("mysql", orm.DRMySQL)
+
+	//	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
 }
 
 func main() {
-	// Database alias.
-	name := "default"
+	//	// Database alias.
+	//	name := "default"
 
-	// Drop table and re-create.
-	force := false
+	//	// Drop table and re-create.
+	//	force := true
 
-	// Print log.
-	verbose := false
+	//	// Print log.
+	//	verbose := true
 
-	// Error.
-	err := orm.RunSyncdb(name, force, verbose)
+	//	// Error.
+	//	err := orm.RunSyncdb(name, force, verbose)
 
-	if err != nil {
-		fmt.Println(err)
+	//	if err != nil {
+	//		fmt.Println(err)
 
-	}
+	//	}
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
+
+	//	orm.RegisterModel(new(User))
 
 	readRSS()
 
