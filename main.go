@@ -56,7 +56,7 @@ func main() {
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
 
-	//	readRSS()
+	readRSS()
 
 	//	startBot()
 
