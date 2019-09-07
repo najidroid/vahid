@@ -1,6 +1,7 @@
 {
  "deploy": {
      "appIsGoPath": false,
-     "main": "newsService"
+     "main": "newsService",
+	"execDir": "src/newsService"
  }
 }
