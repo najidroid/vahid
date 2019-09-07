@@ -65,7 +65,7 @@ func main() {
 
 	//	orm.RegisterModel(new(User))
 
-	//	readRSS()
+	readRSS()
 
 	//	startBot()
 
