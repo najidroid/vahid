@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "newsService/routers"
+	_ "https://localhost:8080/newsService/routers"
 
 	_ "github.com/go-sql-driver/mysql"
 
