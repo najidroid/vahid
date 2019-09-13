@@ -1,15 +1,15 @@
 package main
 
 import (
-	_ "newsService/routers"
-
+	//	_ "newsService/routers"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/najidroid/vahid/routers"
 
 	"github.com/astaxie/beego"
 
 	"fmt"
 
-	"github.com/astaxie/beego/orm"
+	//	"github.com/astaxie/beego/orm"
 
 	"log"
 
@@ -19,10 +19,10 @@ import (
 	//	"io/ioutil"
 	//	"net/http"
 
-	"github.com/ungerik/go-rss"
+	//	"github.com/ungerik/go-rss"
 
 	//	"github.com/go-telegram-bot-api/telegram-bot-api"
-	"time"
+	//	"time"
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
@@ -35,28 +35,28 @@ import (
 //}
 
 func init() {
-	orm.RegisterDriver("mysql", orm.DRMySQL)
+	//	orm.RegisterDriver("mysql", orm.DRMySQL)
 
-	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
+	//	orm.RegisterDataBase("default", "mysql", "root:root@/newsservice?charset=utf8")
 }
 
 func main() {
-	// Database alias.
-	name := "default"
+	//	// Database alias.
+	//	name := "default"
 
-	// Drop table and re-create.
-	force := true
+	//	// Drop table and re-create.
+	//	force := true
 
-	// Print log.
-	verbose := true
+	//	// Print log.
+	//	verbose := true
 
-	// Error.
-	err := orm.RunSyncdb(name, force, verbose)
+	//	// Error.
+	//	err := orm.RunSyncdb(name, force, verbose)
 
-	if err != nil {
-		fmt.Println(err)
+	//	if err != nil {
+	//		fmt.Println(err)
 
-	}
+	//	}
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
@@ -66,10 +66,12 @@ func main() {
 	//	orm.RegisterModel(new(User))
 
 	readRSS()
-
+	//	readRSS()
+	//	readRSS()
+	//	readRSS()
 	//	startBot()
 
-	//startAnotherBot()
+	//	startAnotherBot()
 
 	startGocorn()
 
@@ -87,8 +89,8 @@ func failOnError(err error, msg string) {
 func startGocorn() {
 	gocron.Start()
 	s := gocron.NewScheduler()
-	gocron.Every(10).Minutes().Do(readRSS)
-	//gocron.Every(10).Seconds().Do(vijay)
+	//	gocron.Every(10).Minutes().Do(readRSS)
+	gocron.Every(5).Seconds().Do(readRSS)
 	//gocron.Every(1).Monday().Do(task)
 	//gocron.Every(1).Thursday().At("18:30").Do(doTownCup)
 	//gocron.Every(1).Friday().At("18:30").Do(doAlleyCup)
@@ -97,42 +99,56 @@ func startGocorn() {
 }
 
 func readRSS() {
+	fmt.Println("reading RSS *******************************************")
 	//	channel, err := rss.Read("https://www.irinn.ir/fa/rss/allnews")
-	channel, err := rss.Read("https://www.irinn.ir/fa/rss/1")
+	//	channel, err := rss.Read("https://www.irinn.ir/fa/rss/1")
 	//	channel, err := rss.Read("https://www.varzesh3.com/rss/all")
 	//	channel, err := rss.Read("https://www.tasnimnews.com/fa/rss/feed/0/8/0/%D9%85%D9%87%D9%85%D8%AA%D8%B1%DB%8C%D9%86-%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1-%D8%AA%D8%B3%D9%86%DB%8C%D9%85")
-	if err != nil {
-		fmt.Println(err)
-	}
+	//	if err != nil {
+	//		fmt.Println(err)
+	//	}
 
-	fmt.Println(channel.Title)
+	//	fmt.Println(channel.Title)
 
-	b, err := tb.NewBot(tb.Settings{
+	b, _ := tb.NewBot(tb.Settings{
 		Token: "592949403:AAG-CkEkdqZYxN6DcPGVv8dzAErzIwxNLWQ",
 		// You can also set custom API URL. If field is empty it equals to "https://api.telegram.org"
 		//		URL: "http://195.129.111.17:8012",
-		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
+		//		Poller: &tb.LongPoller{Timeout: 1000 * time.Second},
 	})
+
+	//	b.Handle(tb.OnChannelPost, func(m *tb.Message) {
+	//		if m == nil {
+	//			fmt.Println("m is nil*********************")
+	//		}
+	//		fmt.Println(m.Chat)
+
+	//		// channel posts only
+	//	})
 
 	rec := &tb.Chat{ID: -1001212999492, Type: "channel", FirstName: "test", Username: "thisistestchann"}
 
-	for _, item := range channel.Item {
-		text := item.Title + "\n" + item.Description + "\n" + "لینک خبر: " + item.Link
+	//	for _, item := range channel.Item {
+	//		text := item.Title + "\n" + item.Description + "\n" + "لینک خبر: " + item.Link
 
-		fmt.Println(item.Title)
-		fmt.Println(item.Link)
-		fmt.Println(item.Description)
-		if item.Enclosure != nil {
-			fmt.Println(item.Enclosure[0].URL)
-			pic := &tb.Photo{File: tb.FromURL(item.Enclosure[0].URL), Caption: text}
-			b.Send(rec, pic)
-		} else {
-			b.Send(rec, text)
-		}
+	//		fmt.Println(item.Title)
+	//		fmt.Println(item.Link)
+	//		fmt.Println(item.Description)
+	//		if item.Enclosure != nil {
+	//			fmt.Println(item.Enclosure[0].URL)
+	//			pic := &tb.Photo{File: tb.FromURL(item.Enclosure[0].URL), Caption: text}
+	//			b.Send(rec, pic)
+	//		} else {
+	//			b.Send(rec, text)
+	//		}
 
-	}
+	//	}
+	b.Send(rec, "hi")
 
-	b.Start()
+	//	b.Start()
+
+	fmt.Println("****************///////////////////*******************")
+
 }
 
 //func startAnotherBot() {
@@ -140,7 +156,7 @@ func readRSS() {
 //		Token: "592949403:AAG-CkEkdqZYxN6DcPGVv8dzAErzIwxNLWQ",
 //		// You can also set custom API URL. If field is empty it equals to "https://api.telegram.org"
 //		//		URL: "http://195.129.111.17:8012",
-//		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
+//		//		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 //	})
 
 //	if err != nil {
@@ -166,14 +182,15 @@ func readRSS() {
 //	})
 
 //	rec := &tb.Chat{ID: -1001212999492, Type: "channel", FirstName: "test", Username: "thisistestchann"}
-//	p1 := &tb.Photo{File: tb.FromDisk("nazar.jpg")}
-//	p2 := &tb.Photo{File: tb.FromURL("https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1472214103451-9374bd1c798e%3Fixlib%3Drb-1.2.1%26ixid%3DeyJhcHBfaWQiOjEyMDd9%26w%3D1000%26q%3D80&imgrefurl=https%3A%2F%2Funsplash.com%2Fsearch%2Fphotos%2Fpic&docid=yLbmyYyJ2Ux6uM&tbnid=igUvhVcxMorBOM%3A&vet=10ahUKEwjKlcX2yrnkAhVok4sKHTQDDocQMwhtKAAwAA..i&w=1000&h=667&client=ubuntu&bih=639&biw=1299&q=pic&ved=0ahUKEwjKlcX2yrnkAhVok4sKHTQDDocQMwhtKAAwAA&iact=mrc&uact=8")}
-//	b.SendAlbum(rec, tb.Album{p1, p2})
+//	//	p1 := &tb.Photo{File: tb.FromDisk("nazar.jpg")}
+//	//	p2 := &tb.Photo{File: tb.FromURL("https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1472214103451-9374bd1c798e%3Fixlib%3Drb-1.2.1%26ixid%3DeyJhcHBfaWQiOjEyMDd9%26w%3D1000%26q%3D80&imgrefurl=https%3A%2F%2Funsplash.com%2Fsearch%2Fphotos%2Fpic&docid=yLbmyYyJ2Ux6uM&tbnid=igUvhVcxMorBOM%3A&vet=10ahUKEwjKlcX2yrnkAhVok4sKHTQDDocQMwhtKAAwAA..i&w=1000&h=667&client=ubuntu&bih=639&biw=1299&q=pic&ved=0ahUKEwjKlcX2yrnkAhVok4sKHTQDDocQMwhtKAAwAA&iact=mrc&uact=8")}
+//	//	b.SendAlbum(rec, tb.Album{p1, p2})
+//	//	b.SendAlbum(rec, p2)
 
-//	p := &tb.Photo{File: tb.FromDisk("nazar.jpg"), Caption: "این یک کپشن است:)"}
-//	b.Send(rec, p)
+//	//	p := &tb.Photo{File: tb.FromDisk("nazar.jpg"), Caption: "این یک کپشن است:)"}
+//	//	b.Send(rec, p)
 
-//	b.Send(rec, "محمد درستش کردم، همه چیز رو یاد گرفتم @mohammad_cs_15")
+//	b.Send(rec, "***********************************")
 
 //	b.Start()
 
