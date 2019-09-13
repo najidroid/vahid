@@ -9,7 +9,7 @@ import (
 
 	"fmt"
 
-	//	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/orm"
 
 	"log"
 
